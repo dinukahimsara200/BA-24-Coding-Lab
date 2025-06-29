@@ -65,11 +65,6 @@ def test_runtime():
     
     # Set plot labels and title
     plt.xticks(sizes)  # Set x-ticks to the sizes for better readability
-    """
-    all_times = sorted(set(best_times + worst_times + avg_times)) # Combine all times and sort them for y-ticks
-    plt.yticks(all_times) # Set y-ticks to the unique times from all cases for better readability
-    """
-    
     plt.xlabel('Input Size (n)') 
     plt.ylabel('Time (seconds)')
     plt.title('Insertion Sort Runtime Analysis')

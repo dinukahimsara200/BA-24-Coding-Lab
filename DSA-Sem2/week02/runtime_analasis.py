@@ -58,12 +58,14 @@ def test_runtime():
         print(f"{n:<10} {best_time:<20.6f} {worst_time:<20.6f} {avg_time:<20.6f}")
     
     # Generate the plot (clean without time labels)
-    plt.figure(figsize=(10, 6))
-    plt.plot(sizes, best_times, 'g-', label='Best Case (Sorted)', linewidth=2)
-    plt.plot(sizes, worst_times, 'r-', label='Worst Case (Reverse)', linewidth=2)
-    plt.plot(sizes, avg_times, 'b--', label='Average Case (Random)', linewidth=2)
+    plt.figure(figsize=(10, 6))                                                    # Create a figure with specified size
+    plt.plot(sizes, best_times, 'g-', label='Best Case (Sorted)', linewidth=2)     # Plot best-case times in green solid line
+    plt.plot(sizes, worst_times, 'r-', label='Worst Case (Reverse)', linewidth=2)  # Plot worst-case times in red solid line
+    plt.plot(sizes, avg_times, 'b--', label='Average Case (Random)', linewidth=2)  # Plot average-case times in blue dashed line
     
-    plt.xlabel('Input Size (n)')
+    # Set plot labels and title
+    plt.xticks(sizes)  # Set x-ticks to the sizes for better readability
+    plt.xlabel('Input Size (n)') 
     plt.ylabel('Time (seconds)')
     plt.title('Insertion Sort Runtime Analysis')
     plt.grid(True, linestyle='--', alpha=0.7)

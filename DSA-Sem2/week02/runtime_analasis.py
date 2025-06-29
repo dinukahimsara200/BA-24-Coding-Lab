@@ -68,12 +68,12 @@ def test_runtime():
     plt.xlabel('Input Size (n)') 
     plt.ylabel('Time (seconds)')
     plt.title('Insertion Sort Runtime Analysis')
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.legend()
+    plt.grid(True, linestyle='--', alpha=0.7) # Add grid for better readability
+    plt.legend() 
     
-    plt.tight_layout()
-    plt.savefig('insertion_sort_runtime.png', dpi=300)
-    plt.show()
+    plt.tight_layout()                                 # Adjust layout to prevent overlap
+    plt.savefig('insertion_sort_runtime.png', dpi=300) # Save the plot as a PNG file with high resolution
+    plt.show() 
 
 # Run the test
 test_runtime()

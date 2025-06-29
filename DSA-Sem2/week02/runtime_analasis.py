@@ -34,21 +34,21 @@ def test_runtime():
     
     for n in sizes:
         # Best case
-        arr_best = list(range(n))
-        start = time.time()
-        insertionSort(arr_best)
-        best_time = time.time() - start
-        best_times.append(best_time)
+        arr_best = list(range(n))        # Already sorted array
+        start = time.time()              # Start timer
+        insertionSort(arr_best)          # Run insertion sort
+        best_time = time.time() - start  # Calculate elapsed time
+        best_times.append(best_time)     # Store best case time
         
         # Worst case
-        arr_worst = list(range(n, 0, -1))
+        arr_worst = list(range(n, 0, -1)) # Reverse sorted array
         start = time.time()
         insertionSort(arr_worst)
         worst_time = time.time() - start
         worst_times.append(worst_time)
         
         # Average case
-        arr_avg = random.sample(range(n), n)
+        arr_avg = random.sample(range(n), n) # Random array
         start = time.time()
         insertionSort(arr_avg)
         avg_time = time.time() - start
@@ -65,6 +65,11 @@ def test_runtime():
     
     # Set plot labels and title
     plt.xticks(sizes)  # Set x-ticks to the sizes for better readability
+    """
+    all_times = sorted(set(best_times + worst_times + avg_times)) # Combine all times and sort them for y-ticks
+    plt.yticks(all_times) # Set y-ticks to the unique times from all cases for better readability
+    """
+    
     plt.xlabel('Input Size (n)') 
     plt.ylabel('Time (seconds)')
     plt.title('Insertion Sort Runtime Analysis')
@@ -75,5 +80,4 @@ def test_runtime():
     plt.savefig('insertion_sort_runtime.png', dpi=300) # Save the plot as a PNG file with high resolution
     plt.show() 
 
-# Run the test
 test_runtime()

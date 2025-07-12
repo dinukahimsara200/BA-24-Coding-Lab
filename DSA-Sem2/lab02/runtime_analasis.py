@@ -1,6 +1,6 @@
 import time
-import random
-import matplotlib.pyplot as plt
+import random   # For generating random arrays
+import matplotlib.pyplot as plt     # For plotting the results
 
 def insertionSort(arr):
     for i in range(1, len(arr)):
@@ -13,13 +13,14 @@ def insertionSort(arr):
     return arr
 
 def test_runtime():
+    
     """
     Measures and compares the runtime of insertionSort for different cases,
     printing results to terminal and showing a clean graph.
     """
     
     # Input sizes to test
-    sizes = [100, 500, 1000, 3000, 5000, 7000, 10000]
+    sizes = [900, 1750, 3100, 4500]
     
     # Store timing results
     best_times = []
@@ -29,7 +30,7 @@ def test_runtime():
     # Print table header
     print("\nInsertion Sort Runtime Analysis")
     print("=" * 60)
-    print(f"{'Size':<10} {'Best Case (sorted)':<20} {'Worst Case (reverse)':<20} {'Average Case (random)':<20}")
+    print(f"{'Size':<10} {'Best Case (sorted)':<20} {'Worst Case (reverse)':<20} {'Average Case (random)':<20}") #
     print("-" * 60)
     
     for n in sizes:

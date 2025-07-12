@@ -2,7 +2,7 @@ class Node:
     def __init__(self, value):
         self.left = None
         self.right = None
-        self.key = value  # Fixed the syntax error from original code
+        self.key = value
     
     def traverse(self):
         """

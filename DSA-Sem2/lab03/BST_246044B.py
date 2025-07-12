@@ -2,67 +2,132 @@ class Node:
     def __init__(self, value):
         self.left = None
         self.right = None
-        self.key = value
-
+        self.key = value  # Fixed the syntax error from original code
+    
     def traverse(self):
         """
-        In-order traversal: left subtree, node itself, right subtree.
+        Activity 1: In-order traversal of the tree
+        In-order: Left -> Root -> Right
+        This will give us sorted order for BST
         """
+        result = []
+        
+        # Traverse left subtree
         if self.left:
-            self.left.traverse()
-        print(self.key, end=' ')
+            result.extend(self.left.traverse())
+        
+        # Visit root (current node)
+        result.append(self.key)
+        
+        # Traverse right subtree
         if self.right:
-            self.right.traverse()
-
+            result.extend(self.right.traverse())
+        
+        return result
+    
     def insert(self, value):
         """
-        Insert a new value into the BST. Recursively places it in the correct position.
+        Activity 2: Insert a value into the BST
+        BST property: left child < parent < right child
         """
         if value < self.key:
-            if self.left:
-                self.left.insert(value)
-            else:
+            # Insert to the left
+            if self.left is None:
                 self.left = Node(value)
-        elif value > self.key:
-            if self.right:
-                self.right.insert(value)
             else:
+                self.left.insert(value)
+        else:
+            # Insert to the right (includes equal values)
+            if self.right is None:
                 self.right = Node(value)
-        # If value == self.key, do nothing (no duplicates)
-
+            else:
+                self.right.insert(value)
+    
     def search(self, value):
         """
-        Search for a value in the BST. Returns True if found, False otherwise.
+        Activity 4: Search for a value in the BST
+        Returns True if found, False otherwise
         """
         if value == self.key:
             return True
         elif value < self.key:
+            # Search in left subtree
             if self.left:
                 return self.left.search(value)
             else:
                 return False
         else:
+            # Search in right subtree
             if self.right:
                 return self.right.search(value)
             else:
                 return False
+    
+    def print_tree(self, level=0, prefix="Root: "):
+        """
+        Helper function to visualize the tree structure
+        """
+        print(" " * (level * 4) + prefix + str(self.key))
+        if self.left:
+            self.left.print_tree(level + 1, "L--- ")
+        if self.right:
+            self.right.print_tree(level + 1, "R--- ")
 
 
-if __name__ == "__main__":
-    # Activity: build and test the BST
-    values_to_insert = [20, 40, 10, 4, 15, 50, 35, 55, 60]
+print("=== Binary Search Tree Implementation ===\n")
 
-    # Create an empty BST by initializing the root with the first value
-    root = Node(values_to_insert[0])
-    for val in values_to_insert[1:]:
-        root.insert(val)
+# 1. Create an empty BST (start with root node)
+print("1. Creating BST with root node...")
+root = Node(20)  # First value becomes root
+print(f"Root created with value: {root.key}\n")
 
-    print("In-order traversal of the BST:")
-    root.traverse()
-    print("\n")
+# 2. Insert the remaining values
+print("2. Inserting values: 40, 10, 4, 15, 50, 35, 55, 60")
+values_to_insert = [40, 10, 4, 15, 50, 35, 55, 60]
 
-    # Search tests
-    tests = [15, 52]
-    for t in tests:
-        result = root.search(t)
-        print(f"Search for {t}: {result}")
+for value in values_to_insert:
+    root.insert(value)
+    print(f"Inserted: {value}")
+
+print("\nTree structure:")
+root.print_tree()
+
+# 3. Traverse the tree (in-order traversal)
+print("\n3. In-order traversal of the tree:")
+traversal_result = root.traverse()
+print(f"Traversal result: {traversal_result}")
+print("Note: In-order traversal of BST gives sorted order")
+
+# 4. Search for values 15 and 52
+print("\n4. Searching for values:")
+
+search_value_1 = 15
+found_1 = root.search(search_value_1)
+print(f"Search for {search_value_1}: {'Found' if found_1 else 'Not Found'}")
+
+search_value_2 = 52
+found_2 = root.search(search_value_2)
+print(f"Search for {search_value_2}: {'Found' if found_2 else 'Not Found'}")
+
+# Additional demonstration
+print("\n=== Additional Demonstrations ===")
+
+# Activity 3: Create a separate tree and test
+print("\nActivity 3: Creating a separate small tree for testing:")
+test_root = Node(10)
+test_root.insert(5)
+test_root.insert(15)
+test_root.insert(3)
+test_root.insert(7)
+
+print("Small test tree structure:")
+test_root.print_tree()
+
+print(f"Small tree traversal: {test_root.traverse()}")
+
+# Test edge cases
+print("\n=== Edge Case Testing ===")
+single_node = Node(42)
+print(f"Single node traversal: {single_node.traverse()}")
+print(f"Search in single node (42): {single_node.search(42)}")
+print(f"Search in single node (99): {single_node.search(99)}")

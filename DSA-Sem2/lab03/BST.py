@@ -4,14 +4,14 @@ class Node:
         self.right = None
         self.key = value
 
-    def traverse(self):
+    def traverse(self): # Activity 1: In-order traversal
         if self.left is not None:
             self.left.traverse()       
-        print(self.key, end=" ")       
+        print(self.key)       
         if self.right is not None:
             self.right.traverse()      
 
-    def insert(self, value):
+    def insert(self, value): # Activity 2: Insert values into the BST
         if value < self.key:
             if self.left is None:
                 self.left = Node(value)
@@ -23,7 +23,7 @@ class Node:
             else:
                 self.right.insert(value)
 
-    def search(self, value):
+    def search(self, value): # Activity 4: Search for a value in the BST
         if value == self.key:
             return True
         elif value < self.key:
@@ -41,16 +41,15 @@ class Node:
 root = None
 
 values = [20, 40, 10, 4, 15, 50, 35, 55, 60]
-for v in values:
+for i in values: # Activity 3: Insert all the values
     if root is None:
-        root = Node(v)
+        root = Node(i)
     else:
-        root.insert(v)
+        root.insert(i)
 
-print("In-order traversal:", end=" ")
-if root is not None:
+print("In-order traversal:")
+if root is not None: # Activity 3: Traverse the tree
     root.traverse()
-print()  
 
 print("Search for 15:", root.search(15))  
 print("Search for 52:", root.search(52))  

@@ -6,26 +6,26 @@ class Pair:
 class HashTable:
     def __init__(self, size, m2):
         self.size = size
-        self.m2 = m2  # Last 2 digits of index number (44)
+        self.m2 = m2  
         self.table = [None] * size
     
     def hash(self, k):
-        return k % self.size 
+        return k % self.size
     
     def probeHash(self, k):
         return 1 + (k % self.m2)
     
     def insert(self, k, val):
-        start_index = self.hash(k) # for Rithesh -> 246104 % 20 = 4
-        step = self.probeHash(k) # for Rithesh -> 1 + (246104 % 44) = 13
+        start_index = self.hash(k)
+        step = self.probeHash(k)
         
-        for i in range(self.size):                         # Probing in lopp to find a place to Rithesh
-            index = (start_index + i * step) % self.size   # (4 + 0 * 13) % 20 = 4 Occupied
-            if self.table[index] is None:                  # (4 + 1 * 13) % 20 = 17 Free
+        for i in range(self.size):
+            index = (start_index + i * step) % self.size
+            if self.table[index] is None:
                 self.table[index] = Pair(k, val)
                 return
             elif self.table[index].key == k:
-                return  # Key already exists
+                return  
         print("Hash table is full!")
     
     def search(self, k):
@@ -47,25 +47,20 @@ class HashTable:
         for i in range(self.size):
             index = (start_index + i * step) % self.size
             if self.table[index] is None:
-                return  # Key not found
+                return  
             elif self.table[index].key == k:
                 self.table[index] = None
                 return
 
-# Test the corrected implementation
-last_two_digits = 44 
+
+last_two_digits = 60
 
 ht = HashTable(20, last_two_digits)
+ht.insert(246060, "Thisath")
 ht.insert(246044, "Dinuka")
-ht.insert(246104, "Rithesh")  # This will now work with collision handling
+ht.insert(246148, "Pasan")
+ht.insert(246059, "Manulya")
+ht.insert(246100, "Vihanga") # Collision
 
-print("Search 246044:", ht.search(246044))  # Should return "Dinuka"
-print("Search 246104:", ht.search(246104))  # Should return "Rithesh"
-
-# Display table contents
-print("\nHash table contents:")
-for i, pair in enumerate(ht.table):
-    if pair is not None:
-        print(f"Index {i}: Key={pair.key}, Value={pair.value}")
-
-""" https://github.com/dinukahimsara200/BA-24-Coding-Lab/tree/a00362a07b70d34d94c16c088837daa477fb620e/DSA-Sem2/week06 """
+print("Search 246060:", ht.search(246060))  
+print("Search 246100:", ht.search(246100))  

@@ -1,44 +1,35 @@
 class Pair:
     def __init__(self, k, val):
-        # Store a key and its associated value
         self.key = k
         self.value = val
 
 class HashTable:
     def __init__(self, size, m2):
-        # Total number of slots in the table
         self.size = size
-        # Secondary modulus for computing probe step (e.g., last two digits)
-        self.m2 = m2
-        # Initialize all slots to None (empty)
+        self.m2 = m2  # Last 2 digits of your index (44)
         self.table = [None] * size
     
     def hash(self, k):
-        # Primary hash: key mod table size
-        return k % self.size
+        return k % self.size  # Primary hash: maps key to initial index
     
     def probeHash(self, k):
-        # Secondary hash: 1 + (key mod m2)
-        # Ensures non-zero step for probing
-        return 1 + (k % self.m2)
+        return 1 + (k % self.m2)  # Step size for collision resolution
     
     def insert(self, k, val):
-        # Starting slot based on primary hash
-        start_index = self.hash(k)
-        # Step size for probing
-        step = self.probeHash(k)
+        start_index = self.hash(k)  # Initial position
+        step = self.probeHash(k)    # Probe step size
         
-        # Try up to size times to find an empty slot
         for i in range(self.size):
+            # Double hashing: (start_index + i*step) mod table_size
             index = (start_index + i * step) % self.size
-            # If empty slot found, insert new Pair
+            # Example for 246104: 
+            #   i=0: (4 + 0*13) % 20 = 4 -> occupied
+            #   i=1: (4 + 1*13) % 20 = 17 -> empty (store here)
             if self.table[index] is None:
                 self.table[index] = Pair(k, val)
                 return
-            # If key already exists, exit without inserting
             elif self.table[index].key == k:
-                return
-        # Table is full if no empty slot after full probing
+                return  # Key exists (no duplicate)
         print("Hash table is full!")
     
     def search(self, k):
@@ -72,16 +63,24 @@ class HashTable:
                 self.table[index] = None
                 return
 
-# Test the implementation with collision handling
-last_two_digits = 44
-ht = HashTable(20, last_two_digits)
-ht.insert(246044, "Dinuka")
-ht.insert(246104, "Rithesh")  # Now inserted into next available slot
-ht.insert(246060, "Thisath")
-ht.insert(246148, "Pasan")
-ht.insert(246059, "Manulya")
-ht.insert(246066, "Nisira")
 
-# Verify successful searches
-print("Search 246044:", ht.search(246044))  # Returns "Dinuka"
-print("Search 246104:", ht.search(246104))  # Returns "Rithesh"
+# Test with your data
+last_two_digits = 44  # From your index 246044
+
+ht = HashTable(20, last_two_digits)
+ht.insert(246044, "Dinuka")    # Primary hash: 246044%20=4 → stored at 4
+ht.insert(246104, "Rithesh")   # Collision resolved: stored at 17
+ht.insert(246060, "Thisath")   # 246060%20=0 → stored at 0
+ht.insert(246148, "Pasan")     # 246148%20=8 → stored at 8
+ht.insert(246059, "Manulya")   # 246059%20=19 → stored at 19
+ht.insert(246066, "Nisira")    # 246066%20=6 → stored at 6
+
+# Verify searches
+print("Search 246044:", ht.search(246044))  # "Dinuka" at index 4
+print("Search 246104:", ht.search(246104))  # "Rithesh" at index 17
+
+# Display table contents
+print("\nHash table contents:")
+for i, pair in enumerate(ht.table):
+    if pair is not None:
+        print(f"Index {i}: Key={pair.key}, Value={pair.value}")
